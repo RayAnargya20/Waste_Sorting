@@ -1,0 +1,41 @@
+nama_sampah,kategori,penanganan
+sisa makanan,organik,kompos
+daun kering,organik,kompos
+kulit buah,organik,kompos
+sayur busuk,organik,kompos
+nasi basi,organik,kompos
+ranting kecil,organik,kompos
+ampas kopi,organik,kompos
+kulit telur,organik,kompos
+roti basi,organik,kompos
+sampah dapur,organik,kompos
+botol plastik,anorganik,daur ulang
+kantong plastik,anorganik,daur ulang
+kertas,anorganik,daur ulang
+kardus,anorganik,daur ulang
+kaleng minuman,anorganik,daur ulang
+botol kaca,anorganik,daur ulang
+sedotan plastik,anorganik,daur ulang
+bungkus snack,anorganik,daur ulang
+styrofoam,anorganik,daur ulang
+plastik kemasan,anorganik,daur ulang
+baterai,b3,buang ke tempat khusus
+lampu neon,b3,buang ke tempat khusus
+oli bekas,b3,buang ke tempat khusus
+cat bekas,b3,buang ke tempat khusus
+obat kadaluarsa,b3,buang ke tempat khusus
+aki bekas,b3,buang ke tempat khusus
+pestisida,b3,buang ke tempat khusus
+termometer merkuri,b3,buang ke tempat khusus
+cairan kimia,b3,buang ke tempat khusus
+limbah elektronik kecil,b3,buang ke tempat khusus
+tisu bekas,organik,kompos
+daun pisang,organik,kompos
+kulit jagung,organik,kompos
+serbuk kayu,organik,kompos
+kertas kotor,anorganik,daur ulang
+botol shampo,anorganik,daur ulang
+kemasan susu,anorganik,daur ulang
+kaleng cat kosong,anorganik,daur ulang
+charger rusak,b3,buang ke tempat khusus
+lampu LED rusak,b3,buang ke tempat khusus
