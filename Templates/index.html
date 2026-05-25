@@ -3,44 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waste Sorting Assistant</title>
+    <title>EcoSort - Smart Waste Sorting</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e5f7e5 0%, #f0f8ff 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7ec850 100%);
             color: #1f2937;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 15px 30px;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .logo i {
+            font-size: 2rem;
         }
 
         .page-wrap {
-            min-height: 100vh;
+            min-height: calc(100vh - 70px);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 0.8s ease;
+        }
+
+        .header-section h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-section p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
         }
 
         .card {
-            width: 100%;
-            max-width: 520px;
             padding: 32px;
             border-radius: 24px;
-            background: rgba(255, 255, 255, 0.92);
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(12px);
+            animation: fadeInUp 0.8s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        h1 {
-            margin: 0 0 18px;
-            font-size: 2rem;
-            letter-spacing: -0.03em;
-            color: #0f4c3f;
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
         }
 
-        .subtitle {
-            margin: 0 0 28px;
-            color: #475569;
-            line-height: 1.6;
+        .card h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            color: #7ec850;
+            font-size: 1.8rem;
+        }
+
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .form-group {
@@ -52,105 +135,299 @@
 
         input[type="text"] {
             flex: 1;
-            min-width: 220px;
-            padding: 14px 16px;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
+            min-width: 200px;
+            padding: 16px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
             font-size: 1rem;
-            transition: border-color 0.2s ease;
+            transition: all 0.3s ease;
+            background: #f9fafb;
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #22c55e;
-            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+            border-color: #7ec850;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(126, 200, 80, 0.15);
+        }
+
+        input[type="text"]::placeholder {
+            color: #999;
         }
 
         button {
-            padding: 14px 24px;
+            padding: 16px 32px;
             border: none;
-            border-radius: 12px;
-            background: #16a34a;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #7ec850 0%, #5ca839 100%);
             color: #fff;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(126, 200, 80, 0.3);
         }
 
         button:hover {
-            background: #15803d;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(126, 200, 80, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .result-box {
-            padding: 22px;
+            padding: 28px;
             border-radius: 18px;
-            background: #f8fafc;
-            border: 1px solid #d1d5db;
-            margin-top: 24px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+            border: 2px solid #7ec850;
+            margin-top: 30px;
+            animation: slideUp 0.5s ease;
         }
 
         .result-box h3 {
-            margin: 0 0 14px;
-            color: #134e4a;
+            margin-bottom: 20px;
+            color: #1e3c72;
+            font-size: 1.3rem;
         }
 
-        .result-box p {
-            margin: 8px 0;
-            line-height: 1.6;
+        .result-item {
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-left: 4px solid #7ec850;
+            border-radius: 8px;
+        }
+
+        .result-item strong {
+            color: #1e3c72;
         }
 
         .tag {
             display: inline-block;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 999px;
             font-weight: 700;
-            margin-top: 10px;
+            margin: 10px 0 0 0;
             text-transform: uppercase;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
         }
 
         .tag.organik {
-            background: #d1fae5;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
             color: #065f46;
+            border: 2px solid #6ee7b7;
         }
 
         .tag.anorganik {
-            background: #fef9c3;
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
             color: #92400e;
+            border: 2px solid #facc15;
         }
 
         .tag.b3 {
-            background: #fee2e2;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
             color: #991b1b;
+            border: 2px solid #fca5a5;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .info-section h3 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+
+        .info-section h3 i {
+            color: #7ec850;
+            font-size: 1.8rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+            padding: 20px;
+            border-radius: 14px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            border-color: #7ec850;
+            transform: translateY(-3px);
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: #7ec850;
+            margin-bottom: 10px;
+        }
+
+        .info-card h4 {
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .navbar-content {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                <i class="fas fa-leaf"></i> EcoSort
+            </div>
+        </div>
+    </div>
+
     <div class="page-wrap">
-        <div class="card">
-            <h1>Smart Waste Sorting</h1>
-            <p class="subtitle">Masukkan jenis sampah untuk mendapatkan kategori dan rekomendasi pembuangan.</p>
+        <div class="container">
+            <div class="header-section">
+                <h1>♻️ EcoSort</h1>
+                <p>Solusi Pintar untuk Pemilahan Sampah yang Lebih Baik</p>
+            </div>
 
-            <form method="POST">
-                <div class="form-group">
-                    <input type="text" name="waste" placeholder="Masukkan jenis sampah..." required>
-                    <button type="submit">Klasifikasi</button>
-                </div>
-            </form>
+            <div class="content-grid">
+                <div class="card form-section">
+                    <h2><i class="fas fa-search"></i> Klasifikasi Sampah</h2>
+                    <form method="POST">
+                        <div class="form-group">
+                            <input type="text" name="waste" placeholder="Masukkan jenis sampah..." required>
+                            <button type="submit"><i class="fas fa-check"></i> Klasifikasi</button>
+                        </div>
+                    </form>
 
-            {% if result %}
-                <div class="result-box">
-                    <h3>Hasil:</h3>
-                    <p><strong>Input:</strong> {{ result.input }}</p>
-                    <p><strong>Kategori:</strong>
-                        <span class="tag {% if result.category == 'Organik' %}organik{% elif result.category == 'Anorganik' %}anorganik{% elif result.category == 'B3' %}b3{% endif %}">
-                            {{ result.category }}
-                        </span>
-                    </p>
-                    <p><strong>Rekomendasi:</strong> {{ result.recommendation }}</p>
+                    {% if result %}
+                        <div class="result-box">
+                            <h3><i class="fas fa-check-circle"></i> Hasil Analisis</h3>
+                            <div class="result-item">
+                                <strong><i class="fas fa-trash"></i> Input:</strong> {{ result.input }}
+                            </div>
+                            <div class="result-item">
+                                <strong><i class="fas fa-tag"></i> Kategori:</strong>
+                                <br>
+                                <span class="tag {% if result.category == 'Organik' %}organik{% elif result.category == 'Anorganik' %}anorganik{% elif result.category == 'B3' %}b3{% endif %}">
+                                    {{ result.category }}
+                                </span>
+                            </div>
+                            <div class="result-item">
+                                <strong><i class="fas fa-lightbulb"></i> Rekomendasi:</strong> {{ result.recommendation }}
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
-            {% endif %}
+
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> Panduan Pemilahan</h2>
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Organik</h4>
+                            <p>Sisa makanan, daun, buah, sayur yang dapat dijadikan kompos</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-recycle"></i>
+                            <h4>Anorganik</h4>
+                            <p>Plastik, kertas, kaleng, botol yang dapat didaur ulang</p>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-biohazard"></i>
+                            <h4>B3</h4>
+                            <p>Baterai, lampu, kimia yang berbahaya bagi lingkungan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3><i class="fas fa-globe"></i> Mengapa Pemilahan Sampah Penting?</h3>
+                <p style="color: #6b7280; line-height: 1.8; margin-bottom: 15px;">
+                    Pemilahan sampah adalah langkah pertama dalam menjaga lingkungan yang lebih baik. Dengan memisahkan sampah sesuai kategorinya, 
+                    kita dapat mengurangi dampak negatif terhadap planet kita dan mendukung ekonomi sirkular. EcoSort membantu Anda membuat keputusan 
+                    yang tepat untuk setiap jenis sampah yang Anda miliki.
+                </p>
+                <div style="text-align: center; color: #7ec850; font-size: 1.1rem; font-weight: 600;">
+                    🌍 Bersama Kita Ciptakan Masa Depan yang Lebih Hijau 🌿
+                </div>
+            </div>
         </div>
     </div>
 </body>
